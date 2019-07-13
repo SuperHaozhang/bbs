@@ -27,12 +27,16 @@
         #d6{
             position: absolute;
             float: left;
-            top: 100px;
-            left: 500px;
+            top: 146px;
+            left: 370px;
         }
-        #d2,#d5,#d7{
+        #d2,#d5{
             margin-top: 20px;
             height: 91px;
+        }
+        #d7{
+            margin-top: 20px;
+            height: 86px;
         }
         #d3{
             position: fixed;
@@ -79,11 +83,11 @@
     </div>
     <div id="d6">
         <div th:each="time: ${timelist}" id="d7">
-            <h6 th:text="${time}"></h6>
+            <h6 th:text="${time}+'前'"></h6>
         </div>
     </div>
 </div>
-    
+
 
 <div id="d3" th:object="${title}">
     <a th:href="@{/getTitList}">返回列表</a>

@@ -18,7 +18,7 @@
             width: 100px;
             height: 30px;
         }
-        #avatar {
+        #avatar,#avatar1 {
             width: 45px;
             height: 45px;
             margin-right: 20px;
@@ -56,10 +56,11 @@
     </style>
 </head>
 <body>
-<div id="header">
+<div id="header" th:object="${#session.getAttribute('pro')}">
     <span ></span><a th:href="@{/title}">发布新帖</a>
+    <a th:href="@{/proinf/}+*{name}" th:text="*{name}+':个人中心'"></a>
+    <img id="avatar1" th:src="@{/avatar/}+*{avatar}"><span id="user"></span><a href="out">点击退出</a>
 </div>
-
 <div id="title">
     <div id="d1-1">
         <div th:each="ava: ${avatarlist}" id="d4">

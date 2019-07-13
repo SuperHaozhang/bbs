@@ -6,6 +6,7 @@ import com.cheer.bbs.pojo.Titles;
 import com.cheer.bbs.service.MesService;
 import com.cheer.bbs.service.ProService;
 import com.cheer.bbs.service.TitService;
+import com.cheer.bbs.util.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -39,7 +40,7 @@ public class MesController {
         Titles tit = this.titService.getTit(id);
         List<Messages> mesList = this.mesService.getMesList(id);
         List<String> avalist = new ArrayList<>();
-        List<Long> timelist = new ArrayList<>();
+        List<String> timelist = new ArrayList<>();
         for (Messages messages : mesList) {
             Progra pro2 = this.proService.getPro2(messages.getCname());
             String avatar = pro2.getAvatar();
@@ -53,8 +54,11 @@ public class MesController {
             //获取当前时间
             Date now=new Date();
             long time1 = now.getTime()/1000;
-            long l = time - time1;
-            timelist.add(l);
+            long l = time1 - time;
+            String s = StringUtils.long2String(l);
+
+
+            timelist.add(s);
         }
         model.addAttribute("avalist",avalist);
         model.addAttribute("title",tit);
