@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #avatar {
+            width: 55px;
+            height: 55px;
+            margin-right: 20px;
+        }
+    </style>
+</head>
+<body>
+<table>
+    <tr>
+        <th>name</th>
+        <th>hiredate</th>
+        <th>avatar</th>
+    </tr>
+    <tr th:each="pro: ${proinfo}">
+        <td th:text="${pro.name}"></td>
+        <td th:text="${pro.hiredate}"></td>
+        <td><img id="avatar" th:src="@{/avatar/}+${pro.avatar}"></td>
+    </tr>
+</table>
+
+<div id="title">
+
+    <div id="d1" >
+        <div th:each="tit: ${nameTie}" id="d2">
+            <h3 th:text="'他的帖子：'"></h3><a th:href="@{/onetitle/}+${tit.id}" th:text="${tit.title}"></a><br>
+            <h3 th:text="'..发帖时间:'+${tit.date}"></h3>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

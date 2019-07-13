@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>表单</title>
+    <style type="text/css">
+        form{
+            border: 1px solid;
+            border-radius: 20px;
+            height: 300px;
+            width: 500px;
+        }
+        div{
+            border: 0px solid ;
+            text-align: center;
+            margin: 15px 0px 10px 0px;
+        }
+        #d01{
+            margin-left: -20px;
+        }
+
+        #d03{
+            margin-left: -44px;
+        }
+
+
+    </style>
+</head>
+<body>
+
+    <h3>发布新帖--></h3>
+    <form  method="post">
+        <div id="d01">
+            新帖名称:<input type="text" name="title" size="40px">
+        </div>
+        <div id="d03">
+            帖子内容:
+            <textarea name="message" id="" cols="40" rows="10"></textarea>
+        </div>
+        <div id="d04">
+            <input type="submit" value="发布新帖">
+        </div>
+    </form>
+    
+</body>
+</html>
