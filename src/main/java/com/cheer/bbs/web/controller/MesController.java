@@ -38,8 +38,14 @@ public class MesController {
     private ProService proService;
 
     @GetMapping("/onetitle/{id}")//打印帖子内容和回帖时间
-    public String onetitle(Model model, @PathVariable Integer id) throws Exception {
+    public String onetitle(Model model, @PathVariable Integer id,HttpServletRequest request) throws Exception {
         Titles tit = this.titService.getTit(id);
+        HttpSession session = request.getSession();
+        Progra pro =(Progra) session.getAttribute("pro");
+        //判断是否是查看自己的博客
+        if(pro.getName().equals(tit.getCname())){
+            this.mesService.update(id);
+        }
         List<Messages> mesList = this.mesService.getMesList(id);
         List<String> avalist = new ArrayList<>();
         List<String> timelist = new ArrayList<>();
@@ -63,7 +69,6 @@ public class MesController {
             //放入list集合里
             timelist.add(s);
 
-
         }
         model.addAttribute("avalist",avalist);
         model.addAttribute("title",tit);
@@ -73,9 +78,11 @@ public class MesController {
     }
 
 
-    @PostMapping("/inser/{id}")//回帖
+    @PostMapping("/inser/{tid}")//回帖
     public String insMes(HttpServletRequest request, @PathVariable Integer tid){
         Progra pro = (Progra)request.getSession().getAttribute("pro");
+
+
         String message = request.getParameter("message");
         //查询对应帖子的全部楼层，回帖后楼层+1
         int selectfloor = this.mesService.selectfloor(tid)+1;
@@ -85,8 +92,13 @@ public class MesController {
         Date now=new Date();
 
         String date = myFmt.format(now);
-
-        Messages messages = new Messages(tid,message,selectfloor,pro.getName(),date,0);
+        //获取帖子对应的人的名字
+        Titles tit = this.titService.getTit(tid);
+        int boole = 0;
+        if (pro.getName().equals(tit.getCname())){
+            boole=1;
+        }
+        Messages messages = new Messages(tid,message,selectfloor,pro.getName(),date,boole);
         int i = this.mesService.insertMes(messages);
         return "redirect:/onetitle/"+tid;
     }

@@ -10,4 +10,9 @@ public interface MesMapper {
     int insertMes(Messages messages);
 
     int selectfloor(int tid);
+
+    int countMes(int tid);
+
+    int update(int tid);
 }
+

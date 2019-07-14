@@ -18,29 +18,18 @@
 
    -->
     <insert id="insertMes" >
-        insert into messages value(default ,#{tid}, #{message}, #{floor},#{cname},#{date})
+        insert into messages value(default ,#{tid}, #{message}, #{floor},#{cname},#{date},#{bool})
     </insert>
 
+
+    <select id="countMes" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM messages where tid = #{tid} and bool = 0
+    </select>
     <!--======================================分割线=================================================-->
     <!--public void update(Emp emp);-->
-<!--    <update id="update">
-        update cheng
-        <trim prefix="set" suffixOverrides=",">
-            <if test="name!=null">
-                name=#{name},
-            </if>
-            <if test="password!=null">
-                password=#{password},
-            </if>
-            <if test="hiredate!=null">
-                hiredate=#{hiredate},
-            </if>
-            <if test="avatar!=null">
-                avatar=#{avatar}
-            </if>
-        </trim>
-        where id=#{id}
-    </update>-->
+    <update id="update">
+        update messages set bool=1 where tid=#{tid}
+    </update>
 
 <!--    <delete id="delete">
         delete from cheng where id=#{id}

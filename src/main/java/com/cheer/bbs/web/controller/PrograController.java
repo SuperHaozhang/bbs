@@ -52,19 +52,25 @@ public class PrograController {
 
     @GetMapping("/proinf/{cname}")
     public String avatar(Model model, @PathVariable String cname,HttpServletRequest request){
-        //查出个人所有的帖子里的最大楼层数
-        List<Integer> floorlist = new ArrayList<>();
+        //查出个人所有的帖子里的未读消息数
+        List<Integer> countList = new ArrayList<>();
         Progra pro2 = this.proService.getPro2(cname);
         HttpSession session = request.getSession();
         Progra pro =(Progra)session.getAttribute("pro");
 
         List<Titles> titles = this.titService.getforname2Tit(cname);
-        if(pro2==pro){
+        //计算个人所有帖子的所有未读消息
+        int coun = 0;
+        if(pro2.getName().equals(pro.getName())){
             for (Titles title : titles) {
-                int maxfloor = this.mesService.selectfloor(title.getId());
-                floorlist.add(maxfloor);
+                int countMes = this.mesService.countMes(title.getId());
+                coun +=countMes;
+                countList.add(countMes);
             }
+            model.addAttribute("counMes",coun);
+            System.out.println(countList);
         }
+
         model.addAttribute("nameTie",titles);
         model.addAttribute("proinfo",pro2);
         return "proInfo";

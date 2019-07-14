@@ -38,4 +38,21 @@ public class MesServiceImpl implements MesService {
         return i;
     }
 
+    @Override
+    public int countMes(int tid) {
+        int counMes = this.mesMapper.countMes(tid);
+        return counMes;
+    }
+
+    @Override
+    public int update(int tid) {
+        int update = this.mesMapper.update(tid);
+        if(update>0){
+            System.out.println("更新成功！");
+            return update;
+        }else {
+            return update;
+        }
+    }
+
 }

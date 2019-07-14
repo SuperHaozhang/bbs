@@ -24,6 +24,12 @@
         <td><img id="avatar" th:src="@{/avatar/}+${pro.avatar}"></td>
     </tr>
 </table>
+<div th:each="coun: ${counMes}" id="count">
+    <div>
+        <a th:href="@{/countMess}" th:text="'未读消息:'+${coun}"></a>
+    </div>
+</div>
+
 
 <div id="title">
 

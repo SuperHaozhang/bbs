@@ -87,7 +87,7 @@ public class TitController {
         //得到新帖子的id
         int tid = this.titService.tid();
         //更新帖子对应的回帖信息(针对发帖人的第一条信息，楼层数 1)
-        Messages messages = new Messages(tid,message,1,titles.getCname(),date,0);
+        Messages messages = new Messages(tid,message,1,titles.getCname(),date,1);
         this.mesService.insertMes(messages);
         return "redirect:getTitList";
     }

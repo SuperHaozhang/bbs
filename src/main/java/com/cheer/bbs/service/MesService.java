@@ -11,4 +11,7 @@ public interface MesService {
 
     int selectfloor(int tid);
 
+    int countMes(int tid);
+
+    int update(int tid);
 }
