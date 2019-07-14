@@ -7,16 +7,17 @@ public class Messages {
     private int floor;
     private String cname;
     private String date;
-
+    private int bool;
     public Messages() {
     }
 
-    public Messages(int tid, String message, int floor,String cname,String date) {
+    public Messages(int tid, String message, int floor,String cname,String date,int bool) {
         this.tid = tid;
         this.message = message;
         this.floor = floor;
         this.cname=cname;
         this.date = date;
+        this.bool = bool;
     }
 
     public String getCname() {
@@ -65,6 +66,14 @@ public class Messages {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public int getBool() {
+        return bool;
+    }
+
+    public void setBool(int bool) {
+        this.bool = bool;
     }
 
     @Override

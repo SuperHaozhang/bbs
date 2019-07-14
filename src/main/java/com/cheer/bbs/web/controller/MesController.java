@@ -26,6 +26,8 @@ import java.util.List;
 
 @Controller
 public class MesController {
+
+
     @Resource
     private MesService mesService;
 
@@ -35,7 +37,7 @@ public class MesController {
     @Resource
     private ProService proService;
 
-    @GetMapping("/onetitle/{id}")//打印帖子内容和回帖消息
+    @GetMapping("/onetitle/{id}")//打印帖子内容和回帖时间
     public String onetitle(Model model, @PathVariable Integer id) throws Exception {
         Titles tit = this.titService.getTit(id);
         List<Messages> mesList = this.mesService.getMesList(id);
@@ -54,11 +56,14 @@ public class MesController {
             //获取当前时间
             Date now=new Date();
             long time1 = now.getTime()/1000;
+            //当前时间与数据库中回帖时间作比较
             long l = time1 - time;
+            //调用计算时间方法
             String s = StringUtils.long2String(l);
-
-
+            //放入list集合里
             timelist.add(s);
+
+
         }
         model.addAttribute("avalist",avalist);
         model.addAttribute("title",tit);
@@ -69,11 +74,11 @@ public class MesController {
 
 
     @PostMapping("/inser/{id}")//回帖
-    public String insMes(HttpServletRequest request, @PathVariable Integer id){
+    public String insMes(HttpServletRequest request, @PathVariable Integer tid){
         Progra pro = (Progra)request.getSession().getAttribute("pro");
         String message = request.getParameter("message");
         //查询对应帖子的全部楼层，回帖后楼层+1
-        int selectfloor = this.mesService.selectfloor(id)+1;
+        int selectfloor = this.mesService.selectfloor(tid)+1;
 
         //登记回复时间
         SimpleDateFormat myFmt=new SimpleDateFormat("yyyy年MM月dd日 HH时mm分ss秒");
@@ -81,8 +86,8 @@ public class MesController {
 
         String date = myFmt.format(now);
 
-        Messages messages = new Messages(id,message,selectfloor,pro.getName(),date);
+        Messages messages = new Messages(tid,message,selectfloor,pro.getName(),date,0);
         int i = this.mesService.insertMes(messages);
-        return "redirect:/onetitle/"+id;
+        return "redirect:/onetitle/"+tid;
     }
 }
