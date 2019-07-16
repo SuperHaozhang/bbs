@@ -35,29 +35,29 @@ public class TitController {
     
     @RequestMapping("getTitList")
     public String login(Model model) {
-        List<TitlesVo> titList = titService.getTitList();
-        for (TitlesVo titles : titList) {
-            Progra pro2 = this.proService.getPro2(titles.getCname());
-            if (pro2.getAvatar() == null) {//判断user中有无头像：如果没有就是用默认的头像
-                pro2.setAvatar("default.jpeg");
-            } else {
-                ApplicationHome home = new ApplicationHome(getClass());
-                File sysfile = home.getSource();
-                String jarPath = sysfile.getPath();
-                String dest = jarPath + "/static/avatar/" + pro2.getAvatar();
-                System.out.println(dest);
-                File avatar = new File(dest);
-                if (!avatar.exists()) {
-                    String src = System.getProperty("user.home") + "/avatar/" + pro2.getAvatar();//写入项目中指定文件夹
-                    IOUtils.copy(src, dest);//把上传后的文件复制到指定项目文件夹中
-                }
-                titles.setAvatar(pro2.getAvatar());
-            }
-            Messages lastTime = this.mesService.getLastTime(titles.getId());
-            titles.setLastdate(lastTime.getDate());
-        }
-        model.addAttribute("titlist",titList);
-        return "getTitList";
+           List<TitlesVo> titList = titService.getTitList();
+           for (TitlesVo titles : titList) {
+               //Progra pro2 = this.proService.getPro2(titles.getCname());
+               if (titles.getAvatar() == null) {//判断user中有无头像：如果没有就是用默认的头像
+                   titles.setAvatar("default.jpeg");
+               } else {
+                   ApplicationHome home = new ApplicationHome(getClass());
+                   File sysfile = home.getSource();
+                   String jarPath = sysfile.getPath();
+                   String dest = jarPath + "/static/avatar/" + titles.getAvatar();
+                   System.out.println(dest);
+                   File avatar = new File(dest);
+                   if (!avatar.exists()) {
+                       String src = System.getProperty("user.home") + "/avatar/" + titles.getAvatar();//写入项目中指定文件夹
+                       IOUtils.copy(src, dest);//把上传后的文件复制到指定项目文件夹中
+                   }
+                   //titles.setAvatar(pro2.getAvatar());
+               }
+           }
+            List<TitlesVo> hotTit = this.titService.hotTit();
+            model.addAttribute("hottit",hotTit);
+            model.addAttribute("titlist",titList);
+            return "getTitList";
 
     }
 
@@ -78,7 +78,7 @@ public class TitController {
         Date now=new Date();
 
         String date = myFmt.format(now);
-        Titles titles = new Titles(pro.getName(),title,message,date);
+        Titles titles = new Titles(pro.getName(),title,message,date,0,0);
         //添加一条新的帖子
         this.titService.insPro(titles);
         //得到新帖子的id

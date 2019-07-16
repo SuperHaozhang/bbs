@@ -69,5 +69,11 @@ public class TitServiceImpl implements TitService {
         return name2List;
     }
 
+    @Override
+    public List<TitlesVo> hotTit() {
+        List<TitlesVo> titlesVos = this.titMapper.hotTit();
+        return titlesVos;
+    }
+
 
 }

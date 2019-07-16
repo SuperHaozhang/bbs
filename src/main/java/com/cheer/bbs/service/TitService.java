@@ -21,5 +21,5 @@ public interface TitService {
 
     List<Titles> getforname2Tit(String cname);
 
-
+    List<TitlesVo> hotTit();
 }

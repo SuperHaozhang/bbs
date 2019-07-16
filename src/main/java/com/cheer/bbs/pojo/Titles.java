@@ -6,15 +6,35 @@ public class Titles {
     private String title;
     private String message;
     private String date;
+    private int click;
+    private int mesnum;
 
     public Titles() {
     }
 
-    public Titles(String cname, String title, String message,String date) {
+    public Titles(String cname, String title, String message,String date,int click,int mesnum) {
         this.cname = cname;
         this.title = title;
         this.message = message;
         this.date = date;
+        this.click=click;
+        this.mesnum=mesnum;
+    }
+
+    public int getClick() {
+        return click;
+    }
+
+    public void setClick(int click) {
+        this.click = click;
+    }
+
+    public int getMesnum() {
+        return mesnum;
+    }
+
+    public void setMesnum(int mesnum) {
+        this.mesnum = mesnum;
     }
 
     public int getId() {

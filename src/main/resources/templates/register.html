@@ -60,12 +60,15 @@
 <body>
 <div id="main">
 
-    <form th:action="@{/register}" enctype="multipart/form-data" method="post" >
+    <form th:action="@{/register}" enctype="multipart/form-data" method="post" th:object="${pro}">
+        <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+        <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+        <div th:if="${#fields.hasErrors('hiredate')}" th:errors="*{hiredate}"></div>
 
         <div class="row">
             <div class="cell">
                 <label for="name">Username</label><input type="text" name="name" id="name">
-
+                <label for="name"></label><h5></h5>
             </div>
             <div class="cell">
                 <label for="password">Password</label><input type="password" name="password" id="password">
@@ -79,7 +82,7 @@
             </div>
             <div class="cell">
 
-                <label for="hiredate">Hiredate</label><input type="text" name="hiredate" id="hiredate">
+                <label for="hiredate">Hiredate</label><input type="date" name="hiredate" id="hiredate">
             </div>
         </div>
         <div class="row">
@@ -109,13 +112,13 @@
             $("form").submit();
         });
 
-/*        $("#username").change(function () {
+        $("#name").change(function () {
             console.log("username值改变！");
             $.ajax({
                 url: "a",
                 method: "POST",
                 dataType: "JSON",
-                data: {"username": $("#username").val()},
+                data: {"username": $("#name").val()},
                 success: function (response) {
                     if (response.code === "-1") {
                         $("button").attr("disabled", "disabled");
@@ -125,7 +128,7 @@
                     }
                 }
             });
-        });*/
+        });
     });
 </script>
 </body>

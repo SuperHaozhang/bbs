@@ -1,10 +1,23 @@
 package com.cheer.bbs.pojo;
 
+import org.hibernate.validator.constraints.Length;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+
 public class Progra {
     private int id;
+    @NotBlank
     private String name;
+    @Length(min = 4,max = 16,message = "密码不能低于4位且不能超过16位")
     private String password;
+    @Past
+    @NotNull
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) // 格式化日期 将string类型转化为日期类型
     private String hiredate;
+
     private String avatar;
 
     public Progra() {

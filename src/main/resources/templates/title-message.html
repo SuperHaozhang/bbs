@@ -77,7 +77,7 @@
         </div>
     <div id="d4">
         <div th:each="mes: ${message}" id="d2">
-            <h3 th:text="${mes.cname}+'回复说:'+${mes.message}"></h3>
+            <h3 th:text="${mes.cname}+' :'+${mes.message}"></h3>
             <h6 th:text="${mes.floor}+'楼:回复时间'"></h6>
         </div>
     </div>

@@ -6,7 +6,21 @@
 
     <!--//查询List集合-->
     <select id="getTitList" resultType="com.cheer.bbs.pojoVo.TitlesVo">
-        select * from titles ORDER BY date DESC
+
+        SELECT
+            titles.*,
+            MAX(messages.date) AS lastTime,
+			cheng.avatar as avatar
+		from
+            titles LEFT join
+                    messages
+            ON titles.id = messages.tid
+                    LEFT JOIN
+				cheng on titles.cname=cheng.`name`
+        GROUP BY
+            titles.title
+        ORDER BY
+            lastTime DESC,mesnum desc
     </select>
 
 
@@ -15,12 +29,14 @@
     </select>
 
 
-
+    <select id="hotTit" resultType="com.cheer.bbs.pojoVo.TitlesVo">
+        SELECT   (click+mesnum) as a,titles.* FROM   titles ORDER BY a desc limit 0,3
+    </select>
     <!--useGeneratedKeys=“true”使用自增主键获取主键策略
 
    -->
     <insert id="insPro" >
-        insert into titles value(default ,#{cname}, #{title}, #{message},#{date})
+        insert into titles value(default ,#{cname}, #{title}, #{message},#{date},#{click},#{mesnum})
     </insert>
 
     <select id="tid" resultType="java.lang.Integer">
@@ -40,10 +56,16 @@
                 title=#{title},
             </if>
             <if test="message!=null">
-                message=#{message}
+                message=#{message},
             </if>
             <if test="date!=null">
-                message=#{date}
+                date=#{date},
+            </if>
+            <if test="click!=null">
+                click=#{click},
+            </if>
+            <if test="mesnum!=null">
+                mesnum=#{mesnum},
             </if>
         </trim>
         where id=#{id}

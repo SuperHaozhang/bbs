@@ -62,7 +62,7 @@
         <tr th:each="tit: ${titlist}">
             <td id="td1"><img id="avatar" th:src="@{/avatar/}+${tit.avatar}" ></td>
             <td id="td2"><span><a th:href="@{/onetitle/}+${tit.id}" th:text="${tit.title}"></a></span><br>
-                <span><a th:href="@{/proinf/}+${tit.cname}" th:text="${tit.cname}"></a><h7 th:text="'..回复时间:'+${tit.lastdate}"></h7></span>
+                <span><a th:href="@{/proinf/}+${tit.cname}" th:text="${tit.cname}"></a><h7 th:text="'..回复时间:'+${tit.lastTime}"></h7></span>
             </td>
         </tr>
     </table>
@@ -70,6 +70,9 @@
 
 <div id="d3">
     <h3>今日热门贴</h3>
+    <div th:each="hottit: ${hottit}">
+        <div><span><a th:href="@{/onetitle/}+${hottit.id}" th:text="${hottit.title}"></a></span></div>
+    </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <script>

@@ -23,7 +23,9 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping({"/system", "/"})
@@ -82,7 +84,9 @@ public class PrograController {
     }
 
     @RequestMapping("/register")
-    public String reg(Progra pro){
+    public String reg(Model model){
+        Progra progra = new Progra();
+        model.addAttribute("pro",progra);
         return "register";
     }
 
@@ -94,6 +98,7 @@ public class PrograController {
         }
         String username = pro.getName();
         String password = pro.getPassword();
+        String hiredate = pro.getHiredate();
         //LOGGER.debug(username+":::::"+password);
         Progra progar = new Progra();
         int insert = 0;
@@ -101,6 +106,7 @@ public class PrograController {
             progar.setName(username); //获取注册用户名
             //progar.setPassword(StringUtils.encrypt(password));//获取用户注册密码
             progar.setPassword(password);
+            progar.setHiredate(hiredate);
             String fileName = file.getOriginalFilename();//获取上传文件名称
             System.out.println(fileName);
             String suffix = fileName.substring(fileName.lastIndexOf("."));//分解上传文件后缀名
@@ -116,5 +122,33 @@ public class PrograController {
             e.printStackTrace();
         }
         return "index";
+    }
+
+
+    @RequestMapping(value = "a",method= RequestMethod.POST)
+    @ResponseBody
+    public Map<String,String> a(String username){
+        Map<String,String> messgie = new HashMap<>();
+        Progra pro = this.proService.getPro2(username);
+        if(pro!=null){
+            messgie.put("code","-1");
+            messgie.put("message","用户名已经存在");
+        }
+        return messgie;
+    }
+
+
+    @RequestMapping("/css")
+    public String css(Model model){
+        return "css";
+    }
+
+    @RequestMapping("show")
+    @ResponseBody
+    public List<String> show(){
+        List<String> list= new ArrayList<>();
+        list.add("111");
+        list.add("222");
+        return list;
     }
 }

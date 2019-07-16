@@ -40,6 +40,8 @@ public class MesController {
     @GetMapping("/onetitle/{id}")//打印帖子内容和回帖时间
     public String onetitle(Model model, @PathVariable Integer id,HttpServletRequest request) throws Exception {
         Titles tit = this.titService.getTit(id);
+        tit.setClick(tit.getClick()+1);
+        this.titService.update(tit);
         HttpSession session = request.getSession();
         Progra pro =(Progra) session.getAttribute("pro");
         //判断是否是查看自己的博客
@@ -67,8 +69,8 @@ public class MesController {
             String s = StringUtils.long2String(l);
             //放入list集合里
             timelist.add(s);
-
         }
+
         model.addAttribute("avalist",avalist);
         model.addAttribute("title",tit);
         model.addAttribute("message",mesList);
@@ -99,6 +101,9 @@ public class MesController {
         }
         Messages messages = new Messages(tid,message,selectfloor,pro.getName(),date,boole);
         int i = this.mesService.insertMes(messages);
+
+        tit.setMesnum(tit.getMesnum()+1);
+        this.titService.update(tit);
         return "redirect:/onetitle/"+tid;
     }
 }

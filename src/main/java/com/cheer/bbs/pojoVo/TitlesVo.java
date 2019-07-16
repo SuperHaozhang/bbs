@@ -4,14 +4,16 @@ import com.cheer.bbs.pojo.Titles;
 
 public class TitlesVo extends Titles {
     private String avatar;
-    private String lastdate;
+    private String lastTime;
 
-    public String getLastdate() {
-        return lastdate;
+
+
+    public String getLastTime() {
+        return lastTime;
     }
 
-    public void setLastdate(String lastdate) {
-        this.lastdate = lastdate;
+    public void setLastTime(String lastTime) {
+        this.lastTime = lastTime;
     }
 
     public String getAvatar() {
