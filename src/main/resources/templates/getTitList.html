@@ -24,16 +24,6 @@
             margin-right: 20px;
         }
 
-        #d1{
-            position: absolute;
-            float: left;
-            top: 100px;
-            left:550px;
-        }
-        #d2,#d4{
-            margin-top: 20px;
-            height: 42px;
-        }
         #d3{
             position: absolute;
             right: 30%;
@@ -41,17 +31,23 @@
             border-left: 1px solid black;
             border-bottom : 1px solid black;
         }
-        #d1-1{
-            position: absolute;
-            float: left;
-            top: 100px;
-            left: 500px;
-        }
-
         #title{
             width: 100%;
             height: 70%;
             position: relative;
+        }
+        table{
+            border: 0;
+        }
+        #td1{
+            white-space: nowrap;
+            border:none;
+        }
+        #td2
+        {
+            text-align: left;
+            width: 400px;
+            border:none;
         }
     </style>
 </head>
@@ -62,19 +58,14 @@
     <img id="avatar1" th:src="@{/avatar/}+*{avatar}"><span id="user"></span><a href="out">点击退出</a>
 </div>
 <div id="title">
-    <div id="d1-1">
-        <div th:each="ava: ${avatarlist}" id="d4">
-            <img id="avatar" th:src="@{/avatar/}+${ava}" >
-        </div>
-    </div>
-
-
-    <div id="d1" >
-        <div th:each="tit: ${titlist}" id="d2">
-            <a th:href="@{/onetitle/}+${tit.id}" th:text="${tit.title}"></a><br>
-            <a th:href="@{/proinf/}+${tit.cname}" th:text="${tit.cname}"></a><h7 th:text="'..发帖时间:'+${tit.date}"></h7>
-        </div>
-    </div>
+    <table>
+        <tr th:each="tit: ${titlist}">
+            <td id="td1"><img id="avatar" th:src="@{/avatar/}+${tit.avatar}" ></td>
+            <td id="td2"><span><a th:href="@{/onetitle/}+${tit.id}" th:text="${tit.title}"></a></span><br>
+                <span><a th:href="@{/proinf/}+${tit.cname}" th:text="${tit.cname}"></a><h7 th:text="'..回复时间:'+${tit.lastdate}"></h7></span>
+            </td>
+        </tr>
+    </table>
 </div>
 
 <div id="d3">
@@ -83,18 +74,6 @@
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <script>
 
-
-/*    $(function () {
-        $.ajax({
-            url: "avatar",
-            dataType: "json",
-            method: "GET",
-            success: function (response) {
-                let avatar = response.avatar;
-                $("#avatar").attr("src", "/avatar/" + avatar)
-            }
-        });
-    });*/
 
 </script>
 </body>

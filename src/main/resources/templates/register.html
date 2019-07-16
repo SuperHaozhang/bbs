@@ -78,12 +78,13 @@
                                                                             id="confirmPassword">
             </div>
             <div class="cell">
-                <label for="avatar">Avatar</label><input type="file" name="file" id="avatar">
+
+                <label for="hiredate">Hiredate</label><input type="text" name="hiredate" id="hiredate">
             </div>
         </div>
         <div class="row">
             <div class="cell">
-                <label for="hiredate">Hiredate</label><input type="text" name="hiredate" id="hiredate">
+                <label for="avatar">Avatar</label><input type="file" name="file" id="avatar">
             </div>
         </div>
         <div class="row">
@@ -108,7 +109,7 @@
             $("form").submit();
         });
 
-        $("#username").change(function () {
+/*        $("#username").change(function () {
             console.log("username值改变！");
             $.ajax({
                 url: "a",
@@ -124,7 +125,7 @@
                     }
                 }
             });
-        });
+        });*/
     });
 </script>
 </body>

@@ -2,11 +2,12 @@ package com.cheer.bbs.service;
 
 import com.cheer.bbs.pojo.Progra;
 import com.cheer.bbs.pojo.Titles;
+import com.cheer.bbs.pojoVo.TitlesVo;
 
 import java.util.List;
 
 public interface TitService {
-    List<Titles> getTitList();
+    List<TitlesVo> getTitList();
 
     Titles getTit(int id);
 
@@ -19,4 +20,6 @@ public interface TitService {
     int tid();
 
     List<Titles> getforname2Tit(String cname);
+
+
 }

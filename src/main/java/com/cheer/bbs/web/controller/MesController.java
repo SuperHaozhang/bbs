@@ -53,7 +53,6 @@ public class MesController {
             Progra pro2 = this.proService.getPro2(messages.getCname());
             String avatar = pro2.getAvatar();
             avalist.add(avatar);
-
             String temp = messages.getDate();
             SimpleDateFormat myFmt=new SimpleDateFormat("yyyy年MM月dd日 HH时mm分ss秒");
             Date  date= myFmt.parse(temp);

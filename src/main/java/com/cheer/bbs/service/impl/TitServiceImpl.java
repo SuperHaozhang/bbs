@@ -1,8 +1,8 @@
 package com.cheer.bbs.service.impl;
 
 import com.cheer.bbs.dao.TitMapper;
-import com.cheer.bbs.pojo.Progra;
 import com.cheer.bbs.pojo.Titles;
+import com.cheer.bbs.pojoVo.TitlesVo;
 import com.cheer.bbs.service.TitService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,8 +17,8 @@ public class TitServiceImpl implements TitService {
     private TitMapper titMapper;
 
     @Override
-    public List<Titles> getTitList() {
-        List<Titles> titList = this.titMapper.getTitList();
+    public List<TitlesVo> getTitList() {
+        List<TitlesVo> titList = this.titMapper.getTitList();
         return titList;
     }
 
@@ -68,4 +68,6 @@ public class TitServiceImpl implements TitService {
         List<Titles> name2List = this.titMapper.getforname2Tit(cname);
         return name2List;
     }
+
+
 }

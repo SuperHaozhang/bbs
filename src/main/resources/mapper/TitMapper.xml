@@ -5,15 +5,17 @@
 <mapper namespace="com.cheer.bbs.dao.TitMapper">
 
     <!--//查询List集合-->
-    <!--List<Emp> getEmpbyNameLike(String ename);-->
-    <select id="getTitList" resultType="com.cheer.bbs.pojo.Titles">
-        select * from titles
+    <select id="getTitList" resultType="com.cheer.bbs.pojoVo.TitlesVo">
+        select * from titles ORDER BY date DESC
     </select>
 
 
     <select id="getTit" resultType="com.cheer.bbs.pojo.Titles">
         select * from titles where id=#{id}
     </select>
+
+
+
     <!--useGeneratedKeys=“true”使用自增主键获取主键策略
 
    -->
@@ -28,7 +30,6 @@
         select * from titles where cname=#{cname}
     </select>
     <!--======================================分割线=================================================-->
-    <!--public void update(Emp emp);-->
     <update id="update">
         update titles
         <trim prefix="set" suffixOverrides=",">

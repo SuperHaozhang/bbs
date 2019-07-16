@@ -1,9 +1,9 @@
 package com.cheer.bbs.web.controller;
 
-import com.cheer.bbs.dao.MesMapper;
 import com.cheer.bbs.pojo.Messages;
 import com.cheer.bbs.pojo.Progra;
 import com.cheer.bbs.pojo.Titles;
+import com.cheer.bbs.pojoVo.TitlesVo;
 import com.cheer.bbs.service.MesService;
 import com.cheer.bbs.service.ProService;
 import com.cheer.bbs.service.TitService;
@@ -13,14 +13,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -37,9 +35,8 @@ public class TitController {
     
     @RequestMapping("getTitList")
     public String login(Model model) {
-        List<Titles> titList = titService.getTitList();
-        List<String> avalist = new ArrayList<>();
-        for (Titles titles : titList) {
+        List<TitlesVo> titList = titService.getTitList();
+        for (TitlesVo titles : titList) {
             Progra pro2 = this.proService.getPro2(titles.getCname());
             if (pro2.getAvatar() == null) {//判断user中有无头像：如果没有就是用默认的头像
                 pro2.setAvatar("default.jpeg");
@@ -48,18 +45,18 @@ public class TitController {
                 File sysfile = home.getSource();
                 String jarPath = sysfile.getPath();
                 String dest = jarPath + "/static/avatar/" + pro2.getAvatar();
+                System.out.println(dest);
                 File avatar = new File(dest);
                 if (!avatar.exists()) {
                     String src = System.getProperty("user.home") + "/avatar/" + pro2.getAvatar();//写入项目中指定文件夹
                     IOUtils.copy(src, dest);//把上传后的文件复制到指定项目文件夹中
-
                 }
-                avalist.add(pro2.getAvatar());
+                titles.setAvatar(pro2.getAvatar());
             }
+            Messages lastTime = this.mesService.getLastTime(titles.getId());
+            titles.setLastdate(lastTime.getDate());
         }
         model.addAttribute("titlist",titList);
-        model.addAttribute("avatarlist",avalist);
-        System.out.println(avalist);
         return "getTitList";
 
     }

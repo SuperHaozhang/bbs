@@ -2,6 +2,7 @@ package com.cheer.bbs.service.impl;
 
 import com.cheer.bbs.dao.MesMapper;
 import com.cheer.bbs.pojo.Messages;
+import com.cheer.bbs.pojoVo.TitlesVo;
 import com.cheer.bbs.service.MesService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -55,4 +56,8 @@ public class MesServiceImpl implements MesService {
         }
     }
 
+    @Override
+    public Messages getLastTime(int tid) {
+        return this.mesMapper.getLastTime(tid);
+    }
 }

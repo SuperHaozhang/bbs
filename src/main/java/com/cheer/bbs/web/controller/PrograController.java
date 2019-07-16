@@ -7,15 +7,20 @@ import com.cheer.bbs.service.MesService;
 import com.cheer.bbs.service.ProService;
 import com.cheer.bbs.service.TitService;
 import com.cheer.bbs.util.IOUtils;
+import com.cheer.bbs.util.StringUtils;
+import org.apache.commons.io.FileUtils;
 import org.springframework.boot.system.ApplicationHome;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +57,7 @@ public class PrograController {
 
     @GetMapping("/proinf/{cname}")
     public String avatar(Model model, @PathVariable String cname,HttpServletRequest request){
-        //查出个人所有的帖子里的未读消息数
+        //用于存储个人所有的帖子里的未读消息数
         List<Integer> countList = new ArrayList<>();
         Progra pro2 = this.proService.getPro2(cname);
         HttpSession session = request.getSession();
@@ -74,5 +79,42 @@ public class PrograController {
         model.addAttribute("nameTie",titles);
         model.addAttribute("proinfo",pro2);
         return "proInfo";
+    }
+
+    @RequestMapping("/register")
+    public String reg(Progra pro){
+        return "register";
+    }
+
+
+    @RequestMapping(value="/register", method= RequestMethod.POST)
+    public String regis(MultipartFile file, @Valid Progra pro, BindingResult result){
+        if(result.hasErrors()){
+            return "register";
+        }
+        String username = pro.getName();
+        String password = pro.getPassword();
+        //LOGGER.debug(username+":::::"+password);
+        Progra progar = new Progra();
+        int insert = 0;
+        try {
+            progar.setName(username); //获取注册用户名
+            //progar.setPassword(StringUtils.encrypt(password));//获取用户注册密码
+            progar.setPassword(password);
+            String fileName = file.getOriginalFilename();//获取上传文件名称
+            System.out.println(fileName);
+            String suffix = fileName.substring(fileName.lastIndexOf("."));//分解上传文件后缀名
+            String avatar = username;
+            String path = System.getProperty("user.home")+"/avatar/"+avatar+suffix;//设置上传文件对应用户名
+            FileUtils.copyInputStreamToFile(file.getInputStream(), new File(path));//写入到头像文件夹中
+            progar.setAvatar(avatar + suffix);
+            insert = this.proService.insPro(progar);
+            if(insert>0){
+                return "redirect:/login";//跳转：登陆页面
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "index";
     }
 }

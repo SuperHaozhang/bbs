@@ -14,6 +14,10 @@
     <select id="selectfloor" resultType="java.lang.Integer">
         select MAX(floor) as a FROM messages where tid = #{tid}
     </select>
+
+    <select id="getLastTime" resultType="com.cheer.bbs.pojo.Messages">
+        SELECT * FROM messages where floor = (select MAX(floor) FROM messages where tid = #{tid} ) and tid = #{tid}
+    </select>
     <!--useGeneratedKeys=“true”使用自增主键获取主键策略
 
    -->
