@@ -45,6 +45,11 @@
     <select id="getforname2Tit" resultType="com.cheer.bbs.pojo.Titles">
         select * from titles where cname=#{cname}
     </select>
+
+
+    <select id="searTit" resultType="com.cheer.bbs.pojo.Titles">
+        SELECT * FROM titles where title like "%"#{tit}"%"
+    </select>
     <!--======================================分割线=================================================-->
     <update id="update">
         update titles

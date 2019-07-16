@@ -23,4 +23,6 @@ public interface TitMapper {
     List<Titles> getforname2Tit(String cname);
 
     List<TitlesVo> hotTit();
+
+    List<Titles> searTit(String tit);
 }

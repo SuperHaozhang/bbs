@@ -49,6 +49,42 @@
             width: 400px;
             border:none;
         }
+        input{
+            width: 200px;
+            height: 30px;
+            border: 1px solid black;
+            border-right: none;
+            border-radius: 4px;
+        }
+
+        button{
+            position: relative;
+            right:2px;
+            width: 50px;
+            height: 35px;
+            font-size: 14px;
+            color: white;
+            background:#7fcc0b;
+            border: 0;
+            border-radius: 4px;
+        }
+        li{
+            list-style:none;
+            padding-top:2px;
+            width:150px;
+
+        }
+        ul{
+            margin-top:5px;
+            margin-left:-40px;
+        }
+        a{
+            text-decoration:none;
+            color:#5C5C5C;
+        }
+        .clor{
+            background-color:#ADADAD;
+        }
     </style>
 </head>
 <body>
@@ -57,6 +93,16 @@
     <a th:href="@{/proinf/}+*{name}" th:text="*{name}+':个人中心'"></a>
     <img id="avatar1" th:src="@{/avatar/}+*{avatar}"><span id="user"></span><a href="out">点击退出</a>
 </div>
+
+<div id="search">
+    <form action="">
+        <input type="text" id="search-text" name="searchValue" value="" onkeyup="autocomple()"><button>搜贴</button>
+        <div>
+            <div id="sea1"></div>
+        </div>
+    </form>
+</div>
+
 <div id="title">
     <table>
         <tr th:each="tit: ${titlist}">
@@ -76,7 +122,63 @@
 </div>
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <script>
+/*    $(function () {
+        $("#sear").empty(function () {
+            $.ajax({
+                url: "searTit",
+                method: "POST",
+                dataType: "JSON",
+                data: {"username": $("#name").val()},
+                success: function (response) {
+
+                }
+            });
+        });
+    });*/
 
 
+    $(function(){
+        $("<ul id='autocomplete'></ul>").hide().insertAfter("#sea1");
+        //不能在这里定义自定义的函数，否则无效！！
+    });
+    function autocomple(){
+        $("#autocomplete").empty();
+        $.ajax({
+            url:"searTit",
+            type:"post",
+            data:"tit="+$("#search-text").val(),
+            dataType:"json",
+            success:function(data,textStatus){
+                if(data!=null||!"".equals(data)){
+                    var str = "";
+                    $.each(data,function(n,obj){
+                        $("#autocomplete").show();
+                        str = "<li>"+obj.title+"<li>";
+                        $("#autocomplete").append(str);
+                        $("li").click(function(){
+                            //当点击哪个列表时就把它的值load到输入框中
+                            $("#search-text").val($(this).text());
+                            $("#autocomplete").empty();
+                        });
+                        //鼠标移到当前元素和移出当前元素的背景色
+                        $("li").hover(function(){
+                            $(this).addClass("clor");
+                        },function(){
+                            $(this).removeClass("clor");
+                        });
+                    });
+                }
+
+            },
+            error:function(textStatus){
+                //alert(textStatus);
+            }
+        });
+    }
+
+    function lost(){
+
+        //$("#autocomplete").empty();
+    }
 </script>
 </body>

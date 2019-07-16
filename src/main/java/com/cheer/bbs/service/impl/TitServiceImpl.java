@@ -75,5 +75,11 @@ public class TitServiceImpl implements TitService {
         return titlesVos;
     }
 
+    @Override
+    public List<Titles> searTit(String tit) {
+        List<Titles> titles = this.titMapper.searTit(tit);
+        return titles;
+    }
+
 
 }

@@ -13,9 +13,9 @@ public class Progra {
     private String name;
     @Length(min = 4,max = 16,message = "密码不能低于4位且不能超过16位")
     private String password;
-    @Past
+
     @NotNull
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) // 格式化日期 将string类型转化为日期类型
+    //@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) // 格式化日期 将string类型转化为日期类型
     private String hiredate;
 
     private String avatar;

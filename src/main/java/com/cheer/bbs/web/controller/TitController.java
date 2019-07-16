@@ -13,6 +13,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 
 import javax.annotation.Resource;
@@ -90,4 +92,10 @@ public class TitController {
     }
 
 
+    @RequestMapping(value = "searTit",method= RequestMethod.POST)
+    @ResponseBody
+    public List<Titles> searTit(String tit){
+        List<Titles> titles = this.titService.searTit(tit);
+        return titles;
+    }
 }

@@ -137,18 +137,4 @@ public class PrograController {
         return messgie;
     }
 
-
-    @RequestMapping("/css")
-    public String css(Model model){
-        return "css";
-    }
-
-    @RequestMapping("show")
-    @ResponseBody
-    public List<String> show(){
-        List<String> list= new ArrayList<>();
-        list.add("111");
-        list.add("222");
-        return list;
-    }
 }
